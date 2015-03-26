@@ -12,7 +12,9 @@ def gather(key):
     result = []
     with open(sourcefile, "r") as f:
         for line in f:
-            result.append(json.loads(line)[key])
+            t = json.loads(line)
+            if t[key]:
+                result.append(t[key])
     return result
 
 def display(corpus):
