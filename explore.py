@@ -2,18 +2,22 @@
 
 import sys, json
 
+# the data file to be analyzed
 sourcefile = sys.argv[1]
-tweets = []
-corpus = []
 
-with open(sourcefile, "r") as f:
-    for line in f:
-        tweets.append(json.loads(line)["text"])
+# the field in the JSON to be harvested
+targetkey = sys.argv[2]
 
-for t in sorted(tweets):
-    print(t)
-    for word in t.split(" "):
-        corpus.append(word)
+def gather(key):
+    result = []
+    with open(sourcefile, "r") as f:
+        for line in f:
+            result.append(json.loads(line)[key])
+    return result
 
-print(len(tweets))
-print(sorted(corpus))
+def display(corpus):
+    for t in corpus:
+        print(t)
+
+result = gather(targetkey)
+display(result)
